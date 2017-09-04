@@ -1,0 +1,167 @@
+<?php
+/**
+ * Copyright © 2016 Mozg. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+?>
+
+<!-- <?php echo get_class($this) ?> -->
+
+<script type="text/javascript">
+console.log('<?php echo get_class($this) ?>');
+</script>
+
+<?php if ($this->isCurrentMethod()): ?>
+
+    <?php
+    /*
+    dump($this->getData());
+    dump(get_class_methods(get_class($this)));
+    dump(get_class_vars(get_class($this)));
+    */
+
+    $storeId = null;
+
+    ?>
+
+    <div class="pagseguro-checkout-onepage-success">
+
+        <?php if ($this->isPadraoPayment()): ?>
+            <div class="payment-url">
+                <?php 
+
+                //$action = Mage::helper('mozg_pagseguro')->__('javascript:openPopupsMozg(\'%s\', \'WinXilinus\', \'Link\', \'PagSeguro\', \'pagseguro\');', $this->getPaymentUrl());
+
+                $action = Mage::helper('mozg_pagseguro')->__('javascript:window.open(\'%s\');', $this->getPaymentUrl());
+
+                echo Mage::helper('mozg_pagseguro')->__('<button id="pagseguro_transaction" type="submit" class="button" onclick="%s"><span><span>Click here to process transaction</span></span></button>', $action); 
+
+                ?>
+            </div>
+
+            <script type="text/javascript">
+
+            Event.observe (window, "load", function (event){
+                console.log('load');
+                console.log(event);
+                var target= 'target' in event ? event.target : event.srcElement;
+                console.log('clicked on '+target.tagName);
+
+                if($('pagseguro_transaction')){
+                    window.location.href = "#pagseguro_transaction";
+                    $('pagseguro_transaction').click();
+                }
+                
+            });
+
+            </script>
+        <?php endif; ?>
+
+        <?php if ($this->isLightboxPayment()): ?>
+
+            <div class="payment-url">
+                <?php 
+
+                $pspReference = $this->order->getPayment()->getMozgPspReference();
+
+                $action = Mage::helper('mozg_pagseguro')->__("javascript:PagSeguroLightbox('%s');", $pspReference);
+
+                echo Mage::helper('mozg_pagseguro')->__('<button id="pagseguro_transaction" type="submit" class="button" onclick="%s"><span><span>Click here to process transaction</span></span></button>', $action); 
+
+                ?>
+            </div>
+
+            <script type="text/javascript">
+
+            Event.observe (window, "load", function (event){
+                console.log('load');
+                console.log(event);
+                var target= 'target' in event ? event.target : event.srcElement;
+                console.log('clicked on '+target.tagName);
+
+                if($('pagseguro_transaction')){
+                    window.location.href = "#pagseguro_transaction";
+                    $('pagseguro_transaction').click();
+                }
+                
+            });
+
+            </script>
+
+        <?php endif; ?>
+
+        <?php if ($this->isBoletoPayment()): ?>
+
+            <div class="payment-url">
+                <?php 
+
+                $pspReference = $this->order->getPayment()->getMozgPspReference();
+
+                $action = Mage::helper('mozg_pagseguro')->__('javascript:openPopupsMozg(\'%s\', \'WinXilinus\', \'Link\', \'PagSeguro\', \'pagseguro\');', $this->getPaymentUrl());
+
+                echo Mage::helper('mozg_pagseguro')->__('<button id="pagseguro_transaction" type="submit" class="button" onclick="%s"><span><span>Click here to process transaction</span></span></button>', $action); 
+
+                ?>
+            </div>
+
+            <script type="text/javascript">
+
+            Event.observe (window, "load", function (event){
+                console.log('load');
+                console.log(event);
+                var target= 'target' in event ? event.target : event.srcElement;
+                console.log('clicked on '+target.tagName);
+
+                if($('pagseguro_transaction')){
+                    window.location.href = "#pagseguro_transaction";
+                    $('pagseguro_transaction').click();
+                }
+                
+            });
+
+            </script>
+
+        <?php endif; ?>
+
+        <?php if ($this->isEletronicTransferPayment()): ?>
+
+            <div class="payment-url">
+                <?php 
+
+                $pspReference = $this->order->getPayment()->getMozgPspReference();
+
+                $action = Mage::helper('mozg_pagseguro')->__('javascript:openPopupsMozg(\'%s\', \'WinXilinus\', \'Link\', \'PagSeguro\', \'pagseguro\');', $this->getPaymentUrl());
+
+                echo Mage::helper('mozg_pagseguro')->__('<button id="pagseguro_transaction" type="submit" class="button" onclick="%s"><span><span>Click here to process transaction</span></span></button>', $action); 
+
+                ?>
+            </div>
+
+            <script type="text/javascript">
+
+            Event.observe (window, "load", function (event){
+                console.log('load');
+                console.log(event);
+                var target= 'target' in event ? event.target : event.srcElement;
+                console.log('clicked on '+target.tagName);
+
+                if($('pagseguro_transaction')){
+                    window.location.href = "#pagseguro_transaction";
+                    $('pagseguro_transaction').click();
+                }
+                
+            });
+
+            </script>
+
+        <?php endif; ?>
+
+        <?php if ($this->isPadraoPayment() || $this->isLightboxPayment() || $this->isBoletoPayment() || $this->isEletronicTransferPayment()): ?>
+
+        <?php endif; ?>
+
+    </div>
+
+<?php endif; ?>
+
+<!-- / <?php echo get_class($this) ?> -->
